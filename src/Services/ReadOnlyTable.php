@@ -317,6 +317,10 @@ abstract class ReadOnlyTable extends Table
             $fluent->where('%n IN %in', $this->column($column), $value);
         elseif ($value === null)
             $fluent->where('ISNULL(%n)', $this->column($column));
+        elseif ($value === true)
+            $fluent->where('%n', $this->column($column));
+        elseif ($value === false)
+            $fluent->where('NOT %n', $this->column($column));
         elseif ($value instanceof \DateTime OR $value instanceof \Nette\DateTime OR $value instanceof \DibiDateTime)
             $fluent->where('%n = %t', $this->column($column), $value);
         else
@@ -340,6 +344,10 @@ abstract class ReadOnlyTable extends Table
             $fluent->where('NOT %n IN %in', $this->column($column), $value);
         elseif ($value === null)
             $fluent->where('NOT ISNULL(%n)', $this->column($column));
+        elseif ($value === true)
+            $fluent->where('NOT %n', $this->column($column));
+        elseif ($value === false)
+            $fluent->where('%n', $this->column($column));
         elseif ($value instanceof \DateTime OR $value instanceof \Nette\DateTime OR $value instanceof \DibiDateTime)
             $fluent->where('%n = %t', $this->column($column), $value);
         else
