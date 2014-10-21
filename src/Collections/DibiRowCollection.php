@@ -132,16 +132,16 @@ class DibiRowCollection extends \Nette\ArrayHash {
                 if ((count($columns) - 1) == $index){
                     // last column of the tree
                     // assign the row as the final value
-                    $cursor[$row->{$column}] = $row;
+                    $cursor[(string) $row->{$column}] = $row;
                     // reset cursor back to the top node
                     $cursor = &$data;
                 }else{
                     // any other column
                     // if this value is missing, create it
-                    if (!key_exists($row->{$column}, $cursor))
-                        $cursor[$row->{$column}] = array();
+                    if (!key_exists((string) $row->{$column}, $cursor))
+                        $cursor[(string) $row->{$column}] = array();
                     // move the cursor deeper into the structure
-                    $cursor = &$cursor[$row->{$column}];
+                    $cursor = &$cursor[(string) $row->{$column}];
                 }
 
             }
