@@ -23,7 +23,7 @@ class DibiRowCollection extends \Nette\ArrayHash {
         if ($arr == false)
             return new static;
         // other than that, allow arrays only
-        elseif (!is_array($arr) AND !$arr instanceof Traversable)
+        elseif (!is_array($arr) AND !$arr instanceof \Traversable)
             throw new \Nette\InvalidArgumentException('The provided value is not an array.');
 
         return parent::from($arr, $recursive);
