@@ -9,7 +9,7 @@ Tester\Environment::setup();
 
 class DibiConnection {}
 
-class Mock extends Zaraguza\Database\Table {
+class Mock extends PavolEichler\Database\Table {
     public function _table($key = self::TABLE_MAIN, $alias = self::FORMAT_ALIASED_NAME){ return $this->table($key, $alias); }
     public function _column($column, $type = self::COLUMN_SQL_IDENTIFIER){ return $this->column($column, $type); }
 }

@@ -8,7 +8,7 @@ Tester\Environment::setup();
 
 class DibiConnection {}
 
-class Mock extends \Zaraguza\Database\Database {
+class Mock extends \PavolEichler\Database\Database {
     public function _filterValues($values, $columns = false) { return $this->filterValues($values, $columns); }
     public static function _isAssociativeArray($array) { return self::isAssociativeArray($array); }
     public static function _underscoreToCamelCase($string) { return self::underscoreToCamelCase($string); }

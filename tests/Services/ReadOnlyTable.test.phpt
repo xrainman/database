@@ -9,7 +9,7 @@ require '../../src/Collections/DibiRowCollection.php';
 use Tester\Assert;
 Tester\Environment::setup();
 
-class Employees extends Zaraguza\Database\ReadOnlyTable {
+class Employees extends PavolEichler\Database\ReadOnlyTable {
     const ORDER_EMP_NO = 'emp_no ASC';
     const ORDER_EMP_NO_DESC = 'emp_no DESC';
     protected $autoIncrement = 'emp_no';
@@ -44,7 +44,7 @@ Assert::equal('Kazuhito', $employees->oneByLastNameLike('Cappell%', Employees::O
 Assert::equal(10002, $employees->oneByLastNameNotLike('Fac%', Employees::ORDER_EMP_NO)->emp_no);
 
 // get
-Assert::type('\Zaraguza\Database\DibiRowCollection', $employees->get(null, 10));
+Assert::type('\PavolEichler\Database\DibiRowCollection', $employees->get(null, 10));
 Assert::equal(10, count($employees->get(null, 10)));
 Assert::equal(array(10001, 10002), $employees->get(Employees::ORDER_EMP_NO, 2)->asList('emp_no')); // limit
 Assert::equal(array(10003, 10004), $employees->get(Employees::ORDER_EMP_NO, 2, 2)->asList('emp_no')); // offset
