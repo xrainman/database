@@ -1,6 +1,6 @@
 <?php
 
-namespace Zaraguza\Database;
+namespace PavolEichler\Database;
 
 /**
  * Base class for an object connected to a database.

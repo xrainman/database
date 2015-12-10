@@ -1,6 +1,6 @@
 <?php
 
-namespace Zaraguza\Database;
+namespace PavolEichler\Database;
 
 /**
  * Allows advanced manipulation with the results array.

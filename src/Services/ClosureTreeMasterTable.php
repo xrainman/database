@@ -1,6 +1,6 @@
 <?php
 
-namespace Zaraguza\Database;
+namespace PavolEichler\Database;
 
 /**
  * Closure tree master table service.
