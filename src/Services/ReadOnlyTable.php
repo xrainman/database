@@ -340,7 +340,9 @@ abstract class ReadOnlyTable extends Table
      */
     protected function whereNotEqual($fluent, $column, $value) {
 
-        if (is_array($value))
+        if (is_array($value) AND !count($value))
+            ; // empty arrays require no condition
+        elseif (is_array($value))
             $fluent->where('NOT %n IN %in', $this->column($column), $value);
         elseif ($value === null)
             $fluent->where('NOT ISNULL(%n)', $this->column($column));
