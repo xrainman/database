@@ -85,7 +85,7 @@ abstract class Table extends Database
      */
     public function setTable($table) {
 
-        $this->table = is_array($table) ? $table : array($table => $table);
+        $this->table = is_array($table) ? $table : array(self::camelCaseToUnderscore($this->getReflection()->getShortName()) => $table);
 
     }
 

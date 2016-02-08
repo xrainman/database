@@ -26,7 +26,7 @@ abstract class JoinedTable extends SingleTable
      * @param array $joins
      * @throws \Exception
      */
-    public function __construct(\DibiConnection $dibi, \Nette\Caching\Cache $cache = null, array $table = null, array $joins = array()) {
+    public function __construct(\DibiConnection $dibi, \Nette\Caching\Cache $cache = null, $table = null, array $joins = array()) {
         parent::__construct($dibi, $cache, $table);
 
         if (count($this->table) != 1)
@@ -34,10 +34,6 @@ abstract class JoinedTable extends SingleTable
 
         // join table names translation table
         $this->joins = $joins;
-
-        if (array_key_exists(key($this->table), $this->joins))
-            throw new \Exception('One of the join tables has the same alias keys as the main table.');
-
 
     }
 
@@ -89,7 +85,8 @@ abstract class JoinedTable extends SingleTable
 
         // table by name
         // join table, use translated name, if available
-        if (isset($this->joins[$key])){
+        // use joins table only if the main table does not match
+        if (!isset($this->table[$key]) AND isset($this->joins[$key])){
             if ($alias === self::FORMAT_ALIASED_NAME)
                 return array($this->joins[$key] => $key);
             elseif ($alias === self::FORMAT_NAME)
