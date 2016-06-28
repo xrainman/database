@@ -79,7 +79,7 @@ abstract class CacheableTable extends ReadOnlyTable
             $cacheId = $this->cacheId($fluent);
 
             // use the existing value, if it exists
-            if(isset($this->cache[$cacheId]))
+            if($this->cache->load($cacheId) !== null)
                 return $this->cache->load($cacheId);
 
             // fetch the data and cache results
