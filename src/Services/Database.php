@@ -124,7 +124,7 @@ abstract class Database extends \Nette\Object {
             throw new \InvalidArgumentException("Only alphanumeric characters are allowed in the camel cased name.");
 
         // split the string by words, each one starting with an upper case letter
-        preg_match_all('/[A-Z][a-z0-9]*/', $string, $matches);
+        preg_match_all('/([A-Z][a-z]*)|([0-9]+)/', $string, $matches);
         $words = $matches[0];
 
         // lowercase the words
