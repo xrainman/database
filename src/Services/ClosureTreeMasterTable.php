@@ -23,12 +23,12 @@ abstract class ClosureTreeMasterTable extends JoinedTable
 
     /**
      *
-     * @param \DibiConnection $dibi
+     * @param \Dibi\Connection $dibi
      * @param SingleTable $tree
      * @param \Nette\Caching\Cache $cache
      * @param array $table
      */
-    public function __construct(ClosureTreeSlaveTable $tree, \DibiConnection $dibi, \Nette\Caching\Cache $cache = null, $table = null){
+    public function __construct(ClosureTreeSlaveTable $tree, \Dibi\Connection $dibi, \Nette\Caching\Cache $cache = null, $table = null){
         
         $this->tree = $tree;
         
@@ -73,7 +73,7 @@ abstract class ClosureTreeMasterTable extends JoinedTable
     /**
      * Formats the basic select. Do not call it yourself, use select() instead.
      *
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     protected function base() {
         
@@ -92,10 +92,10 @@ abstract class ClosureTreeMasterTable extends JoinedTable
     /**
      * Fetches the rows in a given format.
      *
-     * @param \DibiFluent $fluent
-     * @return \DibiResult The returned rows.
+     * @param \Dibi\Fluent $fluent
+     * @return \Dibi\Result The returned rows.
      */
-    protected function fetch(\DibiFluent $fluent) {
+    protected function fetch(\Dibi\Fluent $fluent) {
 
         return $fluent->fetchAll();
 
@@ -114,7 +114,7 @@ abstract class ClosureTreeMasterTable extends JoinedTable
      * @param array $values Values for the row to be inserted. May be an array of arrays for a multi insert.
      * @param array $columns An array of allowed columns to be specified in the insert.
      * @param string $return The expected return value, use one of the class constants (RETURN_ROW_COUNT, RETURN_AFFECTED_ROWS). RETURN_AFFECTED_ROWS is supported for single row inserts only.
-     * @return \DibiRow|int Based on the value of $return argument, the count of inserted rows or the row itself.
+     * @return \Dibi\Row|int Based on the value of $return argument, the count of inserted rows or the row itself.
      */
     public function add($values, $return = self::RETURN_ROW_COUNT, $columns = null) {
 
@@ -177,7 +177,7 @@ abstract class ClosureTreeMasterTable extends JoinedTable
             $updateParent = true;
             // get the new parent ID value
             $parent = isset($values['parent']) ? $values['parent'] : $values['parent_id'];
-            $parent = ($parent instanceof \DibiRow) ? $parent->id : $parent;
+            $parent = ($parent instanceof \Dibi\Row) ? $parent->id : $parent;
             // remove the parent from values
             $values = array_diff_key(array_keys($values), array('parent_id' => null, 'parent' => null));
         }
@@ -247,16 +247,16 @@ abstract class ClosureTreeMasterTable extends JoinedTable
     /**
      * Apply an ancestor condition.
      * 
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string $condition One of the class constants.
      * @param mixed $value
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      * @throws \Exception
      */
-    protected function applyAncestorCondition(\DibiFluent $fluent, $condition, $value) {
+    protected function applyAncestorCondition(\Dibi\Fluent $fluent, $condition, $value) {
 
         // support DibiRow objects
-        if ($value instanceof \DibiRow){
+        if ($value instanceof \Dibi\Row){
             $value = $value->id;
         }
         
@@ -283,16 +283,16 @@ abstract class ClosureTreeMasterTable extends JoinedTable
     /**
      * Apply a descendant condition.
      * 
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string $condition One of the class constants.
      * @param mixed $value
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      * @throws \Exception
      */
-    protected function applyDescendantCondition(\DibiFluent $fluent, $condition, $value) {
+    protected function applyDescendantCondition(\Dibi\Fluent $fluent, $condition, $value) {
 
         // support DibiRow objects
-        if ($value instanceof \DibiRow){
+        if ($value instanceof \Dibi\Row){
             $value = $value->id;
         }
         
@@ -319,16 +319,16 @@ abstract class ClosureTreeMasterTable extends JoinedTable
     /**
      * Apply a parent condition.
      * 
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string $condition One of the class constants.
      * @param mixed $value
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      * @throws \Exception
      */
-    protected function applyParentCondition(\DibiFluent $fluent, $condition, $value) {
+    protected function applyParentCondition(\Dibi\Fluent $fluent, $condition, $value) {
         
         // support DibiRow objects
-        if ($value instanceof \DibiRow){
+        if ($value instanceof \Dibi\Row){
             $value = $value->id;
         }
         
@@ -345,16 +345,16 @@ abstract class ClosureTreeMasterTable extends JoinedTable
     /**
      * Apply a child condition.
      * 
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string $condition One of the class constants.
      * @param mixed $value
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      * @throws \InvalidArgumentException
      */
-    protected function applyChildCondition(\DibiFluent $fluent, $condition, $value) {
+    protected function applyChildCondition(\Dibi\Fluent $fluent, $condition, $value) {
 
         // support DibiRow objects
-        if ($value instanceof \DibiRow){
+        if ($value instanceof \Dibi\Row){
             $value = $value->id;
         }
         

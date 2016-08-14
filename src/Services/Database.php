@@ -9,15 +9,15 @@ namespace PavolEichler\Database;
  */
 abstract class Database extends \Nette\Object {
 
-    /** @var \DibiConnection */
+    /** @var \Dibi\Connection */
     protected $dibi;
 
     /**
      *
-     * @param \DibiConnection $dibi
+     * @param \Dibi\Connection $dibi
      * @param \Nette\Caching\Cache $cache
      */
-    public function __construct(\DibiConnection $dibi){
+    public function __construct(\Dibi\Connection $dibi){
 
         $this->dibi = $dibi;
 
@@ -142,50 +142,50 @@ abstract class Database extends \Nette\Object {
     /**
      * Correct the dibi behaivour for the provided statement.
      * 
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param \Models\callable $statement
      */
-    protected function adjustDibiBehaviour(\DibiFluent $fluent = null, $statement) {
+    protected function adjustDibiBehaviour(\Dibi\Fluent $fluent = null, $statement) {
         
         $command = $fluent === null ? null : $fluent->getCommand();
         
         switch ($command){
             
             case 'UPDATE':
-                $defaultClauseSwitches = \DibiFluent::$clauseSwitches;
-                \DibiFluent::$clauseSwitches['JOIN'] = 'UPDATE';
-                \DibiFluent::$clauseSwitches['INNER JOIN'] = 'UPDATE';
-                \DibiFluent::$clauseSwitches['LEFT JOIN'] = 'UPDATE';
-                \DibiFluent::$clauseSwitches['RIGHT JOIN'] = 'UPDATE';
-                \DibiFluent::$clauseSwitches['LEFT OUTER JOIN'] = 'UPDATE';
-                \DibiFluent::$clauseSwitches['RIGHT OUTER JOIN'] = 'UPDATE';
+                $defaultClauseSwitches = \Dibi\Fluent::$clauseSwitches;
+                \Dibi\Fluent::$clauseSwitches['JOIN'] = 'UPDATE';
+                \Dibi\Fluent::$clauseSwitches['INNER JOIN'] = 'UPDATE';
+                \Dibi\Fluent::$clauseSwitches['LEFT JOIN'] = 'UPDATE';
+                \Dibi\Fluent::$clauseSwitches['RIGHT JOIN'] = 'UPDATE';
+                \Dibi\Fluent::$clauseSwitches['LEFT OUTER JOIN'] = 'UPDATE';
+                \Dibi\Fluent::$clauseSwitches['RIGHT OUTER JOIN'] = 'UPDATE';
 
-                $defaultModifiers = \DibiFluent::$modifiers;
-                \DibiFluent::$modifiers['JOIN'] = '%n';
-                \DibiFluent::$modifiers['INNER JOIN'] = '%n';
-                \DibiFluent::$modifiers['LEFT JOIN'] = '%n';
-                \DibiFluent::$modifiers['RIGHT JOIN'] = '%n';
-                \DibiFluent::$modifiers['LEFT OUTER JOIN'] = '%n';
-                \DibiFluent::$modifiers['RIGHT OUTER JOIN'] = '%n';
+                $defaultModifiers = \Dibi\Fluent::$modifiers;
+                \Dibi\Fluent::$modifiers['JOIN'] = '%n';
+                \Dibi\Fluent::$modifiers['INNER JOIN'] = '%n';
+                \Dibi\Fluent::$modifiers['LEFT JOIN'] = '%n';
+                \Dibi\Fluent::$modifiers['RIGHT JOIN'] = '%n';
+                \Dibi\Fluent::$modifiers['LEFT OUTER JOIN'] = '%n';
+                \Dibi\Fluent::$modifiers['RIGHT OUTER JOIN'] = '%n';
 
                 $result = $statement();
 
-                \DibiFluent::$clauseSwitches = $defaultClauseSwitches;
-                \DibiFluent::$modifiers = $defaultModifiers;
+                \Dibi\Fluent::$clauseSwitches = $defaultClauseSwitches;
+                \Dibi\Fluent::$modifiers = $defaultModifiers;
                 break;
             
             default:
-                $defaultModifiers = \DibiFluent::$modifiers;
-                \DibiFluent::$modifiers['JOIN'] = '%n';
-                \DibiFluent::$modifiers['INNER JOIN'] = '%n';
-                \DibiFluent::$modifiers['LEFT JOIN'] = '%n';
-                \DibiFluent::$modifiers['RIGHT JOIN'] = '%n';
-                \DibiFluent::$modifiers['LEFT OUTER JOIN'] = '%n';
-                \DibiFluent::$modifiers['RIGHT OUTER JOIN'] = '%n';
+                $defaultModifiers = \Dibi\Fluent::$modifiers;
+                \Dibi\Fluent::$modifiers['JOIN'] = '%n';
+                \Dibi\Fluent::$modifiers['INNER JOIN'] = '%n';
+                \Dibi\Fluent::$modifiers['LEFT JOIN'] = '%n';
+                \Dibi\Fluent::$modifiers['RIGHT JOIN'] = '%n';
+                \Dibi\Fluent::$modifiers['LEFT OUTER JOIN'] = '%n';
+                \Dibi\Fluent::$modifiers['RIGHT OUTER JOIN'] = '%n';
                 
                 $result = $statement();
                 
-                \DibiFluent::$modifiers = $defaultModifiers;
+                \Dibi\Fluent::$modifiers = $defaultModifiers;
                 break;
         }
         

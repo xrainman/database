@@ -49,11 +49,11 @@ abstract class Table extends Database
 
     /**
      *
-     * @param \DibiConnection $dibi
+     * @param \Dibi\Connection $dibi
      * @param \Nette\Caching\Cache $cache
      * @param array $table
      */
-    public function __construct(\DibiConnection $dibi, $table = null){
+    public function __construct(\Dibi\Connection $dibi, $table = null){
         parent::__construct($dibi);
 
         // if no table name provided, guess it from the class name
@@ -198,11 +198,11 @@ abstract class Table extends Database
     /**
      * Fetches all rows.
      *
-     * @param \DibiFluent $fluent
-     * @return \DibiResult The returned rows.
+     * @param \Dibi\Fluent $fluent
+     * @return \Dibi\Result The returned rows.
      * @throws \Exception
      */
-    protected function fetchAll(\DibiFluent $fluent) {
+    protected function fetchAll(\Dibi\Fluent $fluent) {
 
         // simply fetch data
         $result =  $this->fetch($fluent);
@@ -215,10 +215,10 @@ abstract class Table extends Database
     /**
      * Fetches one row.
      *
-     * @param \DibiFluent $fluent
-     * @return \DibiRow The returned row.
+     * @param \Dibi\Fluent $fluent
+     * @return \Dibi\Row The returned row.
      */
-    protected function fetchOne(\DibiFluent $fluent) {
+    protected function fetchOne(\Dibi\Fluent $fluent) {
 
         // fetch all data and return the first row
         $rows = $this->fetchAll($fluent);

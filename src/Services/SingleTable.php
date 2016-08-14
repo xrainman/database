@@ -108,7 +108,7 @@ abstract class SingleTable extends CacheableTable
      *
      * @param string $table
      * @param array $values
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     protected function update($values) {
 
@@ -125,7 +125,7 @@ abstract class SingleTable extends CacheableTable
      * Returns the basic delete fluent for the main table.
      *
      * @param string $table
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     protected function delete() {
 
@@ -212,7 +212,7 @@ abstract class SingleTable extends CacheableTable
      * @param array $values Values for the row to be inserted. May be an array of arrays for a multi insert.
      * @param array $columns An array of allowed columns to be specified in the insert.
      * @param string $return The expected return value, use one of the class constants (RETURN_ROW_COUNT, RETURN_AFFECTED_ROWS). RETURN_AFFECTED_ROWS is supported for single row inserts only.
-     * @return \DibiRow|int Based on the value of $return argument, the count of inserted rows or the row itself.
+     * @return \Dibi\Row|int Based on the value of $return argument, the count of inserted rows or the row itself.
      */
     public function add($values, $return = self::RETURN_ROW_COUNT, $columns = null) {
 
@@ -329,7 +329,7 @@ abstract class SingleTable extends CacheableTable
      * @param array $values
      * @param string $return The expected return value, use one of the class constants (RETURN_ROW_COUNT, RETURN_AFFECTED_ROWS). RETURN_AFFECTED_ROWS is supported for single row inserts only.
      * @param array $columns
-     * @return \DibiFluent|\DibiResult|int
+     * @return \Dibi\Fluent|\Dibi\Result|int
      */
     public function saveBy($property, $value, $values, $return = self::RETURN_ROW_COUNT, $columns = null) {
 

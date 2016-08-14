@@ -33,14 +33,14 @@ namespace PavolEichler\Database;
  * @method countBy${Column}GreaterOrEqualThan($value)
  * @method countBy${Column}LowerThan($value)
  * @method countBy${Column}LowerOrEqualThan($value)
- * @method \DibiRow oneBy${Column}($value, $order = null)
- * @method \DibiRow oneBy${Column}Not($value, $order = null)
- * @method \DibiRow oneBy${Column}Like($value, $order = null)
- * @method \DibiRow oneBy${Column}NotLike($value, $order = null)
- * @method \DibiRow oneBy${Column}GreaterThan($value, $order = null)
- * @method \DibiRow oneBy${Column}GreaterOrEqualThan($value, $order = null)
- * @method \DibiRow oneBy${Column}LowerThan($value, $order = null)
- * @method \DibiRow oneBy${Column}LowerOrEqualThan($value, $order = null)
+ * @method \Dibi\Row oneBy${Column}($value, $order = null)
+ * @method \Dibi\Row oneBy${Column}Not($value, $order = null)
+ * @method \Dibi\Row oneBy${Column}Like($value, $order = null)
+ * @method \Dibi\Row oneBy${Column}NotLike($value, $order = null)
+ * @method \Dibi\Row oneBy${Column}GreaterThan($value, $order = null)
+ * @method \Dibi\Row oneBy${Column}GreaterOrEqualThan($value, $order = null)
+ * @method \Dibi\Row oneBy${Column}LowerThan($value, $order = null)
+ * @method \Dibi\Row oneBy${Column}LowerOrEqualThan($value, $order = null)
  * @method DibiRowCollection getBy${Column}($value, $order, $limit = null, $offset = null)
  * @method DibiRowCollection getBy${Column}Not($value, $order, $limit = null, $offset = null)
  * @method DibiRowCollection getBy${Column}Like($value, $order, $limit = null, $offset = null)
@@ -123,7 +123,7 @@ abstract class ReadOnlyTable extends Table
     /**
      * Formats the basic select. Do not call it yourself, use select() instead.
      *
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     protected function base() {
 
@@ -134,10 +134,10 @@ abstract class ReadOnlyTable extends Table
     /**
      * Fetches the rows in a given format.
      *
-     * @param \DibiFluent $fluent
-     * @return \DibiResult The returned rows.
+     * @param \Dibi\Fluent $fluent
+     * @return \Dibi\Result The returned rows.
      */
-    protected function fetch(\DibiFluent $fluent) {
+    protected function fetch(\Dibi\Fluent $fluent) {
 
         return $fluent->fetchAll();
 
@@ -153,7 +153,7 @@ abstract class ReadOnlyTable extends Table
      * Returns the basic select fluent.
      * Call without arguments to retrieve the default fields, or pass custom fields in the same way, you would call the dibi::select() method.
      *
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     protected function select() {
 
@@ -200,13 +200,13 @@ abstract class ReadOnlyTable extends Table
     /**
      * Exlpodes and applies the provided condition to the fluent.
      * 
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string|array $property
      * @param string $condition One of the class constants.
      * @param mixed $value
      * @return type
      */
-    protected function applyConditions(\DibiFluent $fluent, $property, $condition, $value) {
+    protected function applyConditions(\Dibi\Fluent $fluent, $property, $condition, $value) {
         
         // get camel cased name
         $name = $this->propertyToName($property);
@@ -250,15 +250,15 @@ abstract class ReadOnlyTable extends Table
     }
     
     /**
-     * Applies a simple condition on a DibiFluent.
+     * Applies a simple condition on a \Dibi\Fluent.
      * 
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string|array $column
      * @param string $condition One of the class constants.
      * @param mixed $value
      * @return type
      */
-    protected function applyCondition(\DibiFluent $fluent, $column, $condition, $value) {
+    protected function applyCondition(\Dibi\Fluent $fluent, $column, $condition, $value) {
         
         return $this->{$condition}($fluent, $column, $value);
         
@@ -267,13 +267,13 @@ abstract class ReadOnlyTable extends Table
     /**
      * Apply an autoincrement condition.
      * 
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string $condition One of the class constants.
      * @param mixed $value
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      * @throws \Exception
      */
-    protected function applyAutoIncrementCondition(\DibiFluent $fluent, $condition, $value) {
+    protected function applyAutoIncrementCondition(\Dibi\Fluent $fluent, $condition, $value) {
 
         if ($this->autoIncrement === null)
             throw new \Exception('Autoincrement column does not exist.');
@@ -292,10 +292,10 @@ abstract class ReadOnlyTable extends Table
     /**
      * Do not add any where condition.
      *
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string|array $column
      * @param mixed $value
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     protected function whereAny($fluent, $column, $value) {
 
@@ -304,12 +304,12 @@ abstract class ReadOnlyTable extends Table
     }
 
     /**
-     * Adds an equal where condition to a DibiFluent object.
+     * Adds an equal where condition to a \Dibi\Fluent object.
      *
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string|array $column
      * @param mixed $value
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     protected function whereEqual($fluent, $column, $value) {
 
@@ -321,7 +321,7 @@ abstract class ReadOnlyTable extends Table
             $fluent->where('%n', $this->column($column));
         elseif ($value === false)
             $fluent->where('NOT %n', $this->column($column));
-        elseif ($value instanceof \DateTime OR $value instanceof \Nette\DateTime OR $value instanceof \DibiDateTime)
+        elseif ($value instanceof \DateTime OR $value instanceof \Nette\DateTime OR $value instanceof \Dibi\DateTime)
             $fluent->where('%n = %t', $this->column($column), $value);
         else
             $fluent->where('%n = %s', $this->column($column), $value);
@@ -331,12 +331,12 @@ abstract class ReadOnlyTable extends Table
     }
 
     /**
-     * Adds an unequal where condition to a DibiFluent object.
+     * Adds an unequal where condition to a \Dibi\Fluent object.
      *
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string|array $column
      * @param mixed $value
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     protected function whereNotEqual($fluent, $column, $value) {
 
@@ -350,7 +350,7 @@ abstract class ReadOnlyTable extends Table
             $fluent->where('NOT %n', $this->column($column));
         elseif ($value === false)
             $fluent->where('%n', $this->column($column));
-        elseif ($value instanceof \DateTime OR $value instanceof \Nette\DateTime OR $value instanceof \DibiDateTime)
+        elseif ($value instanceof \DateTime OR $value instanceof \Nette\DateTime OR $value instanceof \Dibi\DateTime)
             $fluent->where('%n = %t', $this->column($column), $value);
         else
             $fluent->where('NOT %n = %s', $this->column($column), $value);
@@ -360,12 +360,12 @@ abstract class ReadOnlyTable extends Table
     }
 
     /**
-     * Adds a like where condition to a DibiFluent object.
+     * Adds a like where condition to a \Dibi\Fluent object.
      *
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string $column
      * @param mixed $value
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     protected function whereLike($fluent, $column, $value) {
 
@@ -379,12 +379,12 @@ abstract class ReadOnlyTable extends Table
     }
 
     /**
-     * Adds an unlike where condition to a DibiFluent object.
+     * Adds an unlike where condition to a \Dibi\Fluent object.
      *
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string $column
      * @param mixed $value
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     protected function whereNotLike($fluent, $column, $value) {
 
@@ -398,16 +398,16 @@ abstract class ReadOnlyTable extends Table
     }
 
     /**
-     * Adds a greater than where condition to a DibiFluent object.
+     * Adds a greater than where condition to a \Dibi\Fluent object.
      *
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string $column
      * @param mixed $value
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     protected function whereGreaterThan($fluent, $column, $value) {
 
-        if ($value instanceof \DateTime OR $value instanceof \Nette\DateTime OR $value instanceof \DibiDateTime)
+        if ($value instanceof \DateTime OR $value instanceof \Nette\DateTime OR $value instanceof \Dibi\DateTime)
             $fluent->where('%n > %t', $this->column($column), $value);
         else
             $fluent->where('%n > %s', $this->column($column), $value);
@@ -417,16 +417,16 @@ abstract class ReadOnlyTable extends Table
     }
 
     /**
-     * Adds a greater or equal than where condition to a DibiFluent object.
+     * Adds a greater or equal than where condition to a \Dibi\Fluent object.
      *
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string $column
      * @param mixed $value
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     protected function whereGreaterOrEqualThan($fluent, $column, $value) {
 
-        if ($value instanceof \DateTime OR $value instanceof \Nette\DateTime OR $value instanceof \DibiDateTime)
+        if ($value instanceof \DateTime OR $value instanceof \Nette\DateTime OR $value instanceof \Dibi\DateTime)
             $fluent->where('%n >= %t', $this->column($column), $value);
         else
             $fluent->where('%n >= %s', $this->column($column), $value);
@@ -436,16 +436,16 @@ abstract class ReadOnlyTable extends Table
     }
 
     /**
-     * Adds a lower than where condition to a DibiFluent object.
+     * Adds a lower than where condition to a \Dibi\Fluent object.
      *
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string $column
      * @param mixed $value
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     protected function whereLowerThan($fluent, $column, $value) {
 
-        if ($value instanceof \DateTime OR $value instanceof \Nette\DateTime OR $value instanceof \DibiDateTime)
+        if ($value instanceof \DateTime OR $value instanceof \Nette\DateTime OR $value instanceof \Dibi\DateTime)
             $fluent->where('%n < %t', $this->column($column), $value);
         else
             $fluent->where('%n < %s', $this->column($column), $value);
@@ -455,16 +455,16 @@ abstract class ReadOnlyTable extends Table
     }
 
     /**
-     * Adds a lower or equal than where condition to a DibiFluent object.
+     * Adds a lower or equal than where condition to a \Dibi\Fluent object.
      *
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string $column
      * @param mixed $value
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     protected function whereLowerOrEqualThan($fluent, $column, $value) {
 
-        if ($value instanceof \DateTime OR $value instanceof \Nette\DateTime OR $value instanceof \DibiDateTime)
+        if ($value instanceof \DateTime OR $value instanceof \Nette\DateTime OR $value instanceof \Dibi\DateTime)
             $fluent->where('%n <= %t', $this->column($column), $value);
         else
             $fluent->where('%n <= %s', $this->column($column), $value);
@@ -474,23 +474,23 @@ abstract class ReadOnlyTable extends Table
     }
 
     /**
-     * Adds a between where condition to a DibiFluent object.
+     * Adds a between where condition to a \Dibi\Fluent object.
      *
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string $column
      * @param array $value
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     protected function whereBetween($fluent, $column, $value) {
 
         list($from, $to) = $value;
         
-        if ($from instanceof \DateTime OR $from instanceof \Nette\DateTime OR $from instanceof \DibiDateTime)
+        if ($from instanceof \DateTime OR $from instanceof \Nette\DateTime OR $from instanceof \Dibi\DateTime)
             $fluent->where('%n > %t', $this->column($column), $from);
         else
             $fluent->where('%n > %s', $this->column($column), $from);
         
-        if ($to instanceof \DateTime OR $to instanceof \Nette\DateTime OR $to instanceof \DibiDateTime)
+        if ($to instanceof \DateTime OR $to instanceof \Nette\DateTime OR $to instanceof \Dibi\DateTime)
             $fluent->where('%n < %t', $this->column($column), $to);
         else
             $fluent->where('%n < %s', $this->column($column), $to);
@@ -500,23 +500,23 @@ abstract class ReadOnlyTable extends Table
     }
 
     /**
-     * Adds a between or equal where condition to a DibiFluent object.
+     * Adds a between or equal where condition to a \Dibi\Fluent object.
      *
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @param string $column
      * @param array $value
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     protected function whereBetweenOrEqual($fluent, $column, $value) {
 
         list($from, $to) = $value;
         
-        if ($from instanceof \DateTime OR $from instanceof \Nette\DateTime OR $from instanceof \DibiDateTime)
+        if ($from instanceof \DateTime OR $from instanceof \Nette\DateTime OR $from instanceof \Dibi\DateTime)
             $fluent->where('%n >= %t', $this->column($column), $from);
         else
             $fluent->where('%n >= %s', $this->column($column), $from);
         
-        if ($to instanceof \DateTime OR $to instanceof \Nette\DateTime OR $to instanceof \DibiDateTime)
+        if ($to instanceof \DateTime OR $to instanceof \Nette\DateTime OR $to instanceof \Dibi\DateTime)
             $fluent->where('%n <= %t', $this->column($column), $to);
         else
             $fluent->where('%n <= %s', $this->column($column), $to);
@@ -643,12 +643,12 @@ abstract class ReadOnlyTable extends Table
     }
 
     /**
-     * Applies the current set of filters on the provided DibiFluent object.
+     * Applies the current set of filters on the provided \Dibi\Fluent object.
      *
-     * @param \DibiFluent $fluent
-     * @return \DibiFluent
+     * @param \Dibi\Fluent $fluent
+     * @return \Dibi\Fluent
      */
-    protected function applyFilters(\DibiFluent $fluent) {
+    protected function applyFilters(\Dibi\Fluent $fluent) {
 
         // apply all current filters on the provided fluent
         foreach($this->filters as $filter){
@@ -682,7 +682,7 @@ abstract class ReadOnlyTable extends Table
      * @param string|array $property Property name or an array with 2 keys - a table name and a column name.
      * @param string $condition Condition type. Use one of the class constants.
      * @param mixed $value Column value.
-     * @return int|\DibiResult Row count or the \DibiResult object with row count for each column value.
+     * @return int|\Dibi\Result Row count or the \Dibi\Result object with row count for each column value.
      */
     public function countBy($property, $condition, $value) {
 
@@ -707,7 +707,7 @@ abstract class ReadOnlyTable extends Table
      * @param string $order use of the predefined object constants.
      * @param int $limit
      * @param int $offset
-     * @return \DibiRow Found row or false.
+     * @return \Dibi\Row Found row or false.
      */
     public function one($order = null) {
 
@@ -724,7 +724,7 @@ abstract class ReadOnlyTable extends Table
      * @param string $order Order by.
      * @param int $limit Limit.
      * @param int $offset Offset
-     * @return \DibiRow Found row or false.
+     * @return \Dibi\Row Found row or false.
      */
     public function oneBy($property, $condition, $value, $order = null) {
 
@@ -805,7 +805,7 @@ abstract class ReadOnlyTable extends Table
      *
      * @param string $name
      * @param array $args
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      * @throws \Nette\MemberAccessException
      * @throws \InvalidArgumentException
      */

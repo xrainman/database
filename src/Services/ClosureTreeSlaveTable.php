@@ -125,14 +125,14 @@ abstract class ClosureTreeSlaveTable extends Table {
     /**
      * Adds a new row into the tree.
      * 
-     * @param int|\DibiRow $parent
-     * @param int|\DibiRow $child
+     * @param int|\Dibi\Row $parent
+     * @param int|\Dibi\Row $child
      */
     public function add($parent, $child){
         
         // get relevant IDs
-        $parentId = ($parent instanceof \DibiRow) ? $parent->id : $parent;
-        $childId = ($child instanceof \DibiRow) ? $child->id : $child;
+        $parentId = ($parent instanceof \Dibi\Row) ? $parent->id : $parent;
+        $childId = ($child instanceof \Dibi\Row) ? $child->id : $child;
         
         // make it a child of all ancestors and self
         $this->dibi->query('
@@ -159,14 +159,14 @@ abstract class ClosureTreeSlaveTable extends Table {
     /**
      * Modifies an existing row and move it to a new position with all its descendants.
      * 
-     * @param int|\DibiRow $parent
-     * @param int|\DibiRow $child
+     * @param int|\Dibi\Row $parent
+     * @param int|\Dibi\Row $child
      */
     public function modify($parent, $child){
         
         // get relevant IDs
-        $parentId = ($parent instanceof \DibiRow) ? $parent->id : $parent;
-        $childId = ($child instanceof \DibiRow) ? $child->id : $child;
+        $parentId = ($parent instanceof \Dibi\Row) ? $parent->id : $parent;
+        $childId = ($child instanceof \Dibi\Row) ? $child->id : $child;
         
         // remove all existing connections with former parents, maintain subtree structure
         $this->dibi->query('
@@ -223,13 +223,13 @@ abstract class ClosureTreeSlaveTable extends Table {
     /**
      * Removes a row and all its descendants from the tree. 
      * 
-     * @param int|\DibiRow $project
-     * @param int|\DibiRow $row
+     * @param int|\Dibi\Row $project
+     * @param int|\Dibi\Row $row
      */
     public function remove($row){
         
         // get relevant IDs
-        $rowId = ($row instanceof \DibiRow) ? $row->id : $row;
+        $rowId = ($row instanceof \Dibi\Row) ? $row->id : $row;
         
         // remove all connections of child and its descendants
         $this->dibi->query('

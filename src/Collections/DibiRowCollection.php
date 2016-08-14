@@ -12,7 +12,7 @@ class DibiRowCollection extends \Nette\ArrayHash {
     /**
      * Creates a new DibiRowCollection from an array.
      *
-     * @param \DibiRow[] $arr
+     * @param DibiRow[] $arr
      * @param bool $recursive
      * @return \static
      * @throws \Nette\InvalidArgumentException

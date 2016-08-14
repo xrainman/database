@@ -47,11 +47,11 @@ abstract class CacheableTable extends ReadOnlyTable
 
     /**
      *
-     * @param \DibiConnection $dibi
+     * @param \Dibi\Connection $dibi
      * @param \Nette\Caching\Cache $cache
      * @param array $table
      */
-    public function __construct(\DibiConnection $dibi, \Nette\Caching\Cache $cache = null, $table = null){
+    public function __construct(\Dibi\Connection $dibi, \Nette\Caching\Cache $cache = null, $table = null){
         parent::__construct($dibi, $table);
 
         $this->cache = $cache;
@@ -61,11 +61,11 @@ abstract class CacheableTable extends ReadOnlyTable
     /**
      * Fetches all rows.
      *
-     * @param \DibiFluent $fluent
-     * @return \DibiResult The returned rows.
+     * @param \Dibi\Fluent $fluent
+     * @return \Dibi\Result The returned rows.
      * @throws \Exception
      */
-    protected function fetchAll(\DibiFluent $fluent) {
+    protected function fetchAll(\Dibi\Fluent $fluent) {
 
         if ($this->useCache){
 
@@ -272,10 +272,10 @@ abstract class CacheableTable extends ReadOnlyTable
     /**
      * Create a unique ID string for the given fluent query.
      *
-     * @param \DibiFluent $fluent
+     * @param \Dibi\Fluent $fluent
      * @return string Unique ID hash for this query and database connection.
      */
-    protected function cacheId(\DibiFluent $fluent) {
+    protected function cacheId(\Dibi\Fluent $fluent) {
 
         // get the complete query from the Dibi's test() call
 

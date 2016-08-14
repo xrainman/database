@@ -20,13 +20,13 @@ abstract class JoinedTable extends SingleTable
 
     /**
      *
-     * @param \DibiConnection $dibi
+     * @param \Dibi\Connection $dibi
      * @param \Nette\Caching\Cache $cache
      * @param array $table
      * @param array $joins
      * @throws \Exception
      */
-    public function __construct(\DibiConnection $dibi, \Nette\Caching\Cache $cache = null, $table = null, array $joins = array()) {
+    public function __construct(\Dibi\Connection $dibi, \Nette\Caching\Cache $cache = null, $table = null, array $joins = array()) {
         parent::__construct($dibi, $cache, $table);
 
         if (count($this->table) != 1)

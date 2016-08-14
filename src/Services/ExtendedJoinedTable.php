@@ -24,10 +24,10 @@ abstract class ExtendedJoinedTable extends JoinedTable
      * Then you would parse the results in the fetch() method, e.g. using the dibi::fetchAssoc().
      * As extend is alwyas called only after the limit, offset and order parameters have been applied, it will not interfere with paging.
      *
-     * @param \DibiFluent $fluent
-     * @return \DibiFluent
+     * @param \Dibi\Fluent $fluent
+     * @return \Dibi\Fluent
      */
-    protected function extend(\DibiFluent $fluent) {
+    protected function extend(\Dibi\Fluent $fluent) {
 
         return $this->dibi->select('*')->from($fluent, $this->table(self::TABLE_MAIN, self::FORMAT_ALIAS));
 
@@ -43,7 +43,7 @@ abstract class ExtendedJoinedTable extends JoinedTable
      * Returns the extended basic select.
      * Call without arguments to retrieve the default fields, or pass custom fields in the same way, you would call the dibi::select() method.
      *
-     * @return \DibiFluent
+     * @return \Dibi\Fluent
      */
     protected function extended() {
 
@@ -80,10 +80,10 @@ abstract class ExtendedJoinedTable extends JoinedTable
     /**
      * Fetches all rows.
      *
-     * @param \DibiFluent $fluent
-     * @return \DibiResult The returned rows.
+     * @param \Dibi\Fluent $fluent
+     * @return \Dibi\Result The returned rows.
      */
-    protected function fetchAll(\DibiFluent $fluent) {
+    protected function fetchAll(\Dibi\Fluent $fluent) {
 
         $fluent = $this->extend($fluent);
 
