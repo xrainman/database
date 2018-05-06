@@ -7,7 +7,9 @@ namespace PavolEichler\Database;
  *
  * @author Pavol Eichler <pavol.eichler@gmail.com>
  */
-abstract class Database extends \Nette\Object {
+abstract class Database {
+
+    use \Nette\SmartObject;
 
     /** @var \Dibi\Connection */
     protected $dibi;
