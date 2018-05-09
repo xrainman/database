@@ -33,8 +33,8 @@ abstract class Table extends Database
     const FORMAT_NAME = false;
     const FORMAT_ALIAS = 2;
     const FORMAT_ALIASED_NAME = true;
-    
-    
+
+
     /**
      * Main table key => name pair.
      * @var array
@@ -57,7 +57,7 @@ abstract class Table extends Database
         parent::__construct($dibi);
 
         // if no table name provided, guess it from the class name
-        $this->setTable($table === null ? self::camelCaseToUnderscore($this->getReflection()->getShortName()) : $table);
+        $this->setTable($table === null ? self::camelCaseToUnderscore((new \ReflectionClass($this))->getShortName()) : $table);
 
     }
 
@@ -85,7 +85,7 @@ abstract class Table extends Database
      */
     public function setTable($table) {
 
-        $this->table = is_array($table) ? $table : array(self::camelCaseToUnderscore($this->getReflection()->getShortName()) => $table);
+        $this->table = is_array($table) ? $table : array(self::camelCaseToUnderscore((new \ReflectionClass($this))->getShortName()) => $table);
 
     }
 
@@ -153,7 +153,7 @@ abstract class Table extends Database
             return array($key => $alias);
         else
             throw new \InvalidArgumentException('Invalid alias format, be sure to use one of the class constants.');
-        
+
     }
 
     /**
