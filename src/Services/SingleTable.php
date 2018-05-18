@@ -248,7 +248,7 @@ abstract class SingleTable extends CacheableTable
             }
 
             // get the last insert ID
-            $id = $this->dibi->insertId();
+            $id = $this->dibi->getInsertId();
             
             return $this->oneByAutoIncrement($id);
         
